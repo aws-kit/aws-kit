@@ -36,6 +36,6 @@ setup(
             'vpc-peering = aws_kit.vpc_peering:main',
         ],
     },
-    long_description=read('README.rst'),
+    long_description=read('README.md'),
     install_requires=install_requires,
 )

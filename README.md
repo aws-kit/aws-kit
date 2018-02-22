@@ -4,9 +4,9 @@ A set of aws command line tools to save your clicks AWS consoles.
 
 
 
-#Installation
+# Installation
 
-` pip install pip install git+https://github.com/aws-kit/aws-kit.git`
+`pip install git+https://github.com/aws-kit/aws-kit.git`
 
 # Tools introduction
 
@@ -50,6 +50,5 @@ Apply current peerings. If an peering is already there, then drop it in the firs
 `$ vpc-peering -c <config.yaml> -a apply --force`
 
 
-License
-==============
+# License
 MIT License.
