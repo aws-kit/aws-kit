@@ -1,0 +1,25 @@
+accepter:
+  acc: "219200251541"
+   # can use vpc-id or simply the name prefix of a vpc to identify a cloud
+  vpc: "OFFVPC-Sydney-dev"
+  credential: # currently only support assumed role
+     role: "arn:aws:iam::219200251541:role/crossacc_dev1"
+  region: ap-southeast-2
+requester:
+  acc: "633771659122"
+  region: us-east-1
+  # can use vpc-id or simply the name prefix of a vpc to identify a cloud
+  vpc: "gateway-ci-vpc"
+  credential: # currently only support assumed role. If not provided, then use context settings.
+     role: "arn:aws:iam::633771659122:role/crossacc_dev1"
+routes:
+ # note routing is stateless. That means you should config two-way routing for subnets between
+ # requester and accepter.
+ accepter:
+  - route_table: "" #routetable_id or prefix
+    to: "gateway-ci-vpc" # connector subnet_id or prefix. If leaves empty(""), that will match all the subnets!
+
+ requester:
+  - route_table: "gateway-ci-vpc" #routetable_id or prefix
+    to: "" # connector subnet_id or prefix. If leaves empty(""), that will match all the subnets!
+
