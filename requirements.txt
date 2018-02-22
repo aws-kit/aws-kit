@@ -1,0 +1,5 @@
+boto3>=1.5.24
+botocore>=1.8.38
+PyYAML>=3.0
+pyCLI>=2.0
+six
