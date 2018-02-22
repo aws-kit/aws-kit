@@ -33,20 +33,26 @@ The vpc-peering tool can help you setup peering with templates. Saves time, elim
 ### Usage
 
 Generate config template in an interactive way. Or simply look at sample.yaml to see what it looks like.
+
 `$ vpc-peering`
 
 Check if the configuration works for current vpcs.
+
 `$ vpc-peering -c <config.yaml> -a plan`
+
 This will check current vpcs and see if there are issues if the config.yaml is to be applied.
 
 Clear current peerings (if already exist, or hanging, or in a weird state):
+
 `$ vpc-peering -c <config.yaml> -a delete`
 
 Apply current peerings. If an peering is already there, then stop.
+
 `$ vpc-peering -c <config.yaml> -a apply`
 
 
 Apply current peerings. If an peering is already there, then drop it in the first place.
+
 `$ vpc-peering -c <config.yaml> -a apply --force`
 
 
