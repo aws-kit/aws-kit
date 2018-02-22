@@ -80,10 +80,8 @@ optional arguments:
                         OPTIONAL. Configuration file. If not provided, then
                         this app ignores otherparameters and simply generate a
                         skeleton of config file.
-  -f, --force           OPTIONAL. If force is not enabled, then when there are
-                        existing peering exists, regardless if they are
-                        active, then delete them and thenre-configure with the
-                        template definition.
+  -f, --force           OPTIONAL. Force apply the change, even if the peering
+                        already exists.
   -a {apply,delete,plan}, --action {apply,delete,plan}
                         OPTIONAL. apply: Create or update peering setting to
                         desired configuration.delete: Delete the peering

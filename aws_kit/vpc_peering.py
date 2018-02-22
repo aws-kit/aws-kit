@@ -1,12 +1,14 @@
 #!/usr/bin/env python
 from __future__ import print_function
+
 import json
 import sys
 from time import sleep
-from six.moves import input
+
 import boto3
 import cli.log
 import yaml
+from six.moves import input
 
 
 def match_tag_prefix(logger, tag_list, prefix):
@@ -359,28 +361,28 @@ def config_gen(logger):
     logger.info("Entering the interactive mode of generating vpc peering config. If you type something "
                 "wrong during the process, you are OK to continue. You can always come back and edit the "
                 "generated configuration content.")
-    print ("Collecting the the account and VPC info ----------------------------")
+    print("Collecting the the account and VPC info ----------------------------")
     requester_acc = input(
         "Which account initiates the vpc_peering requests, aka. the requester. (For Rozetta shared service "
         "setup, it is ideal to use sysadmin(790966503942) account)."
         "Example 790966503942):")
-    print ("Collecting the the account and VPC info ----------------------------")
+    print("Collecting the the account and VPC info ----------------------------")
     requester_vpc = input("Which vpc to peer on the requester side (For rozetta shared service in sydney"
-                              "Region, it is OFFVPC-Sydney). This can be in VPC name or vpc-id. "
-                              "Example OFFVPC-Sydney):")
+                          "Region, it is OFFVPC-Sydney). This can be in VPC name or vpc-id. "
+                          "Example OFFVPC-Sydney):")
     requester_role = input("Which aws role to use for requester. If empty, then the script will"
-                               "use the profile in parameter. Example: crossacc_dev1):")
+                           "use the profile in parameter. Example: crossacc_dev1):")
     requester_region = input("Which aws profile to use for requester. If not provided, then default to "
-                                 "ap-southest-2. Example: ap-southest-2):")
+                             "ap-southest-2. Example: ap-southest-2):")
 
     accepter_acc = input("Which account accepts the vpc_peering request, aka. the accepter. "
-                             "Example 12345678012):")
+                         "Example 12345678012):")
     accepter_vpc = input("Which vpc to peer on the accepter side. This can be VPC name or vpc-id. "
-                             "Example rap-prod2-ap-southeast-2):")
+                         "Example rap-prod2-ap-southeast-2):")
     accepter_role = input("Which aws profile to use for accepter. If not provided, then the script will"
-                              "use the profile in parameter. Example: crossacc_dev1):")
+                          "use the profile in parameter. Example: crossacc_dev1):")
     accepter_region = input("Which aws profile to use for accepter. If not provided, then default to "
-                                "ap-southest-2. Example: ap-southest-2):")
+                            "ap-southest-2. Example: ap-southest-2):")
     config = {
         'requester': {
             'acc': requester_acc,
@@ -408,17 +410,17 @@ def config_gen(logger):
 
     routes_setting = {}
     for side, peer in (('requester', 'accepter'), ('accepter', 'requester')):
-        print ("Collecting the the routes info for %s side ----------------------------" % side)
+        print("Collecting the the routes info for %s side ----------------------------" % side)
         while True:
             from_route = input("Which route table to update on %s side. "
-                                   "(can be the name prefix, which can match multiple route tables, press"
-                                   "enter to finish): " % side)
+                               "(can be the name prefix, which can match multiple route tables, press"
+                               "enter to finish): " % side)
             if from_route == '':
                 break
 
             to_route = input("   :: For %s, it routs to which subnet(s) on %s side? "
-                                 "(can be the name prefix. If input empty, then it matches ALL subnets): "
-                                 % (from_route, peer))
+                             "(can be the name prefix. If input empty, then it matches ALL subnets): "
+                             % (from_route, peer))
             if side in routes_setting:
                 routes_setting[side].append(
                     {
@@ -433,19 +435,18 @@ def config_gen(logger):
                 }]
     if routes_setting:
         config['routes'] = routes_setting
-    print ('======================== CONFIG STARTS ========================')
-    print (yaml.dump(config, default_flow_style=False))
-    print ('======================== CONFIG ENDS ========================')
-    print ('You can copy and modify the above yaml file into a config file and run this tool again. ')
+    print('======================== CONFIG STARTS ========================')
+    print(yaml.dump(config, default_flow_style=False))
+    print('======================== CONFIG ENDS ========================')
+    print('You can copy and modify the above yaml file into a config file and run this tool again. ')
 
 
 vpc_peering.add_param('-c', '--config',
                       help='OPTIONAL. Configuration file. If not provided, then this app ignores other'
                            'parameters and simply generate a skeleton of config file.')
 vpc_peering.add_param('-f', '--force', default=False, action='store_true',
-                      help='OPTIONAL. If force is not enabled, then when there are existing '
-                           'peering exists, regardless if they are active, then delete them and then'
-                           're-configure with the template definition. ')
+                      help='OPTIONAL. Force apply the change, even if the peering'
+                           ' already exists. ')
 vpc_peering.add_param('-a', '--action', choices=['apply', 'delete', 'plan'], required=False, default='apply',
                       help='OPTIONAL. apply: Create or update peering setting to desired configuration.'
                            'delete: Delete the peering between two VPCs.')
@@ -454,6 +455,7 @@ vpc_peering.add_param("-p", "--profile", help="the default profile if not specif
 
 if __name__ == "__main__":
     vpc_peering.run()
+
 
 def main():
     vpc_peering.run()
