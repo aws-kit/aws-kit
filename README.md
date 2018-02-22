@@ -55,6 +55,48 @@ Apply current peerings. If an peering is already there, then drop it in the firs
 
 `$ vpc-peering -c <config.yaml> -a apply --force`
 
+For more usages, check 
+
+```bash
+$ vpc-peering -h
+
+usage: vpc_peering [-h] [-l LOGFILE] [-q] [-s] [-v] [-c CONFIG] [-f]
+                   [-a {apply,delete,plan}] [-r REGION] [-p PROFILE]
+
+The app to help setting up the peering between two VPCs. Ideally, you should
+prepare your default aws config (or the --profile) as sysadmin account, which
+will be used as requester, and allow sysadmin account to be able to assume to
+the accepter account role. The role should be configured in the config yaml
+file.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -l LOGFILE, --logfile LOGFILE
+                        log to file (default: log to stdout)
+  -q, --quiet           decrease the verbosity
+  -s, --silent          only log warnings
+  -v, --verbose         raise the verbosity
+  -c CONFIG, --config CONFIG
+                        OPTIONAL. Configuration file. If not provided, then
+                        this app ignores otherparameters and simply generate a
+                        skeleton of config file.
+  -f, --force           OPTIONAL. If force is not enabled, then when there are
+                        existing peering exists, regardless if they are
+                        active, then delete them and thenre-configure with the
+                        template definition.
+  -a {apply,delete,plan}, --action {apply,delete,plan}
+                        OPTIONAL. apply: Create or update peering setting to
+                        desired configuration.delete: Delete the peering
+                        between two VPCs.
+  -r REGION, --region REGION
+                        region to override the settings in profile
+  -p PROFILE, --profile PROFILE
+                        the default profile if not specified in the config
+
+```
 
 # License
 MIT License.
+
+# Author
+Cheney Yan
